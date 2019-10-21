@@ -7,18 +7,18 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>HashMap工作原理和扩容机制 - Hexo</title>
+<title>HashMap工作原理及其扩容机制 - Hexo</title>
 
 
-    <meta name="description" content="HashMap工作原理和扩容机制什么是哈希表数组的特点是：寻址容易，插入和删除困难；而链表的特点是：寻址困难，插入和删除容易。那么我们能不能综合两者的特性，做出一种寻址容易，插入删除也容易的数据结构？答案是肯定的，这就是我们要提起的哈希表，哈希表有多种不同的实现方法，我接下来解释的是最常用的一种方法——拉链法，我们可以理解为“链表的数组”。 hashmap**工作原理**HashMap内部是通过">
+    <meta name="description" content="什么是哈希表数组的特点是：寻址容易，插入和删除困难；而链表的特点是：寻址困难，插入和删除容易。那么我们能不能综合两者的特性，做出一种寻址容易，插入删除也容易的数据结构？答案是肯定的，这就是我们要提起的哈希表，哈希表有多种不同的实现方法，我接下来解释的是最常用的一种方法——拉链法，我们可以理解为“链表的数组”。 hashmap**工作原理**HashMap内部是通过 数组 + 链表 的结构实现的，每">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HashMap工作原理和扩容机制">
+<meta property="og:title" content="HashMap工作原理及其扩容机制">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;22&#x2F;HashMap%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%8F%8A%E5%85%B6%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6&#x2F;index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="HashMap工作原理和扩容机制什么是哈希表数组的特点是：寻址容易，插入和删除困难；而链表的特点是：寻址困难，插入和删除容易。那么我们能不能综合两者的特性，做出一种寻址容易，插入删除也容易的数据结构？答案是肯定的，这就是我们要提起的哈希表，哈希表有多种不同的实现方法，我接下来解释的是最常用的一种方法——拉链法，我们可以理解为“链表的数组”。 hashmap**工作原理**HashMap内部是通过">
+<meta property="og:description" content="什么是哈希表数组的特点是：寻址容易，插入和删除困难；而链表的特点是：寻址困难，插入和删除容易。那么我们能不能综合两者的特性，做出一种寻址容易，插入删除也容易的数据结构？答案是肯定的，这就是我们要提起的哈希表，哈希表有多种不同的实现方法，我接下来解释的是最常用的一种方法——拉链法，我们可以理解为“链表的数组”。 hashmap**工作原理**HashMap内部是通过 数组 + 链表 的结构实现的，每">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;og_image.png">
-<meta property="og:updated_time" content="2019-10-21T19:07:39.787Z">
+<meta property="og:updated_time" content="2019-10-21T19:55:21.992Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;og_image.png">
 
@@ -78,7 +78,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="HashMap工作原理和扩容机制" height="28">
+                <img src="/images/logo.svg" alt="HashMap工作原理及其扩容机制" height="28">
             
             </a>
         </div>
@@ -134,13 +134,13 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-10-21T19:04:33.267Z">2019-10-22</time>
+                <time class="level-item has-text-grey" datetime="2019-10-21T19:47:56.924Z">2019-10-22</time>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    11 minutes read (About 1700 words)
+                    11 minutes read (About 1689 words)
                 </span>
                 
                 
@@ -149,26 +149,23 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                HashMap工作原理和扩容机制
+                HashMap工作原理及其扩容机制
             
         </h1>
         <div class="content">
-            <h1 id="HashMap工作原理和扩容机制"><a href="#HashMap工作原理和扩容机制" class="headerlink" title="HashMap工作原理和扩容机制"></a>HashMap工作原理和扩容机制</h1><h2 id="什么是哈希表"><a href="#什么是哈希表" class="headerlink" title="什么是哈希表"></a>什么是哈希表</h2><p>数组的特点是：寻址容易，插入和删除困难；而链表的特点是：寻址困难，插入和删除容易。<br><strong>那么</strong>我们能不能综合两者的特性，做出一种寻址容易，插入删除也容易的数据结构？答案是肯定的，这就是我们要提起的哈希表，哈希表有多种不同的实现方法，我接下来解释的是最常用的一种方法——<strong>拉链法</strong>，我们可以理解为“<strong>链表的数组”</strong>。</p>
+            <h2 id="什么是哈希表"><a href="#什么是哈希表" class="headerlink" title="什么是哈希表"></a>什么是哈希表</h2><p>数组的特点是：寻址容易，插入和删除困难；而链表的特点是：寻址困难，插入和删除容易。<br><strong>那么</strong>我们能不能综合两者的特性，做出一种寻址容易，插入删除也容易的数据结构？答案是肯定的，这就是我们要提起的哈希表，哈希表有多种不同的实现方法，我接下来解释的是最常用的一种方法——<strong>拉链法</strong>，我们可以理解为“<strong>链表的数组”</strong>。</p>
 <h2 id="hashmap-工作原理"><a href="#hashmap-工作原理" class="headerlink" title="hashmap**工作原理**"></a><em>hashmap**</em>工作原理**</h2><p><strong>HashMap</strong>内部是通过 数组 + 链表 的结构实现的，每个数组单元中存放着一个单链表的头结点，其中每个结点是一个<strong>Node</strong>对象，Node对象包含了<strong>Key-Value键值对</strong>，<strong>还有一个Node&lt;K,V&gt; next指向链表中下一个结点。</strong> HashMap采用拉链法解决哈希冲突。</p>
 <figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title">Map</span>.<span class="hljs-title">Entry</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt; </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> hash;</span><br><span class="line">        <span class="hljs-keyword">final</span> K key;</span><br><span class="line">        V value;</span><br><span class="line">        Node&lt;K,V&gt; next;</span><br><span class="line"></span><br><span class="line">        Node(<span class="hljs-keyword">int</span> hash, K key, V value, Node&lt;K,V&gt; next) &#123;</span><br><span class="line">            <span class="hljs-keyword">this</span>.hash = hash;</span><br><span class="line">            <span class="hljs-keyword">this</span>.key = key;</span><br><span class="line">            <span class="hljs-keyword">this</span>.value = value;</span><br><span class="line">            <span class="hljs-keyword">this</span>.next = next;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h2 id="HashMap是如何通过key来计算索引的呢"><a href="#HashMap是如何通过key来计算索引的呢" class="headerlink" title="HashMap是如何通过key来计算索引的呢"></a>HashMap是如何通过key来计算索引的呢</h2><pre><code>首先计算key的hashcode，再对hashcode进行二次hash，然后再对数组的长度进行取模</code></pre><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> <span class="hljs-title">hash</span><span class="hljs-params">(Object key)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> h;</span><br><span class="line">        <span class="hljs-keyword">return</span> (key == <span class="hljs-keyword">null</span>) ? <span class="hljs-number">0</span> : (h = key.hashCode()) ^ (h &gt;&gt;&gt; <span class="hljs-number">16</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<pre><code>在getNode方法里 对数组长度取并，作用上相当于取模或取%</code></pre><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">first = tab[(n - <span class="hljs-number">1</span>) &amp; hash]</span><br></pre></td></tr></table></figure>
-<pre><code>HashMap提供两个重要的基本操作，put(K, V)和get(K)</code></pre><h3 id="get-K"><a href="#get-K" class="headerlink" title="get(K)"></a>get(K)</h3><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> V <span class="hljs-title">get</span><span class="hljs-params">(Object key)</span> </span>&#123;</span><br><span class="line">        Node&lt;K,V&gt; e;</span><br><span class="line">        <span class="hljs-keyword">return</span> (e = getNode(hash(key), key)) == <span class="hljs-keyword">null</span> ? <span class="hljs-keyword">null</span> : e.value;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="HashMap是如何通过key来计算索引的呢"><a href="#HashMap是如何通过key来计算索引的呢" class="headerlink" title="HashMap是如何通过key来计算索引的呢"></a>HashMap是如何通过key来计算索引的呢</h2><p>   首先计算key的hashcode，再对hashcode进行二次hash，然后再对数组的长度进行取模</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> <span class="hljs-title">hash</span><span class="hljs-params">(Object key)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> h;</span><br><span class="line">        <span class="hljs-keyword">return</span> (key == <span class="hljs-keyword">null</span>) ? <span class="hljs-number">0</span> : (h = key.hashCode()) ^ (h &gt;&gt;&gt; <span class="hljs-number">16</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>   在getNode方法里 对数组长度取并，作用上相当于取模或取%</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">first = tab[(n - <span class="hljs-number">1</span>) &amp; hash]</span><br></pre></td></tr></table></figure>
+<p>HashMap提供两个重要的基本操作，put(K, V)和get(K)</p>
+<h3 id="get-K"><a href="#get-K" class="headerlink" title="get(K)"></a>get(K)</h3><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> V <span class="hljs-title">get</span><span class="hljs-params">(Object key)</span> </span>&#123;</span><br><span class="line">        Node&lt;K,V&gt; e;</span><br><span class="line">        <span class="hljs-keyword">return</span> (e = getNode(hash(key), key)) == <span class="hljs-keyword">null</span> ? <span class="hljs-keyword">null</span> : e.value;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">final</span> Node&lt;K,V&gt; <span class="hljs-title">getNode</span><span class="hljs-params">(<span class="hljs-keyword">int</span> hash, Object key)</span> </span>&#123;</span><br><span class="line">        Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; first, e; <span class="hljs-keyword">int</span> n; K k;</span><br><span class="line">        <span class="hljs-keyword">if</span> ((tab = table) != <span class="hljs-keyword">null</span> &amp;&amp; (n = tab.length) &gt; <span class="hljs-number">0</span> &amp;&amp;</span><br><span class="line">            (first = tab[(n - <span class="hljs-number">1</span>) &amp; hash]) != <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span> (first.hash == hash &amp;&amp; <span class="hljs-comment">// always check first node</span></span><br><span class="line">                ((k = first.key) == key || (key != <span class="hljs-keyword">null</span> &amp;&amp; key.equals(k))))</span><br><span class="line">                <span class="hljs-keyword">return</span> first;</span><br><span class="line">            <span class="hljs-keyword">if</span> ((e = first.next) != <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">                <span class="hljs-keyword">if</span> (first <span class="hljs-keyword">instanceof</span> TreeNode)</span><br><span class="line">                    <span class="hljs-keyword">return</span> ((TreeNode&lt;K,V&gt;)first).getTreeNode(hash, key);</span><br><span class="line">                <span class="hljs-keyword">do</span> &#123;</span><br><span class="line">                    <span class="hljs-keyword">if</span> (e.hash == hash &amp;&amp;</span><br><span class="line">                        ((k = e.key) == key || (key != <span class="hljs-keyword">null</span> &amp;&amp; key.equals(k))))</span><br><span class="line">                        <span class="hljs-keyword">return</span> e;</span><br><span class="line">                &#125; <span class="hljs-keyword">while</span> ((e = e.next) != <span class="hljs-keyword">null</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<pre><code>从getNode方法可以看出 如果第一个结点不为null 先判断第一个结点 如果hash值和key相等
-就返回第一个解点，否则，判断是否是红黑树，是则按照红黑树查询，否则，while循环遍历
-该数组位置下对应的链表 找到对应的hash值和key相等的结点，如果没有就返回null。</code></pre><h3 id="put-K-V"><a href="#put-K-V" class="headerlink" title="put(K, V)"></a>put(K, V)</h3><pre><code>首先通过resize()初始化数组或双培扩容
-根据key计算出数组下标索引，定位到数组元素，如果第一个结点为null,则说明没有链表，则        
-直接new一个新Node结点插入数组，如果第一个结点不为null，则判断第一个结点是不是要更
-新的结点，如果是就更新，否则再判断table[i] 是否为treeNode，即table[i] 是否是红黑树，如
-果是红黑树，则直接在树中插入键值对，否则转向下面； 遍历链表，p.next是否为null，是则n
-ew一个新结点，p.next指向这个新结点，否则判断是否是要找的结点，是则跳出循环，否则继
-续遍历。</code></pre><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> V <span class="hljs-title">put</span><span class="hljs-params">(K key, V value)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> putVal(hash(key), key, value, <span class="hljs-keyword">false</span>, <span class="hljs-keyword">true</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>   从getNode方法可以看出 如果第一个结点不为null 先判断第一个结点 如果hash值和key相等就返回第一个解点，否则，判断是否是红黑树，是则按照红黑树查询，否则，while循环遍历该数组位置下对应的链表 找到对应的hash值和key相等的结点，如果没有就返回null。</p>
+<h3 id="put-K-V"><a href="#put-K-V" class="headerlink" title="put(K, V)"></a>put(K, V)</h3><p>首先通过resize()初始化数组或双培扩容根据key计算出数组下标索引，定位到数组元素，如果第一个结点为null,则说明没有链表，则直接new一个新Node结点插入数组，如果第一个结点不为null，则判断第一个结点是不是要更新的结点，如果是就更新，否则再判断table[i] 是否为treeNode，即table[i] 是否是红黑树，如果是红黑树，则直接在树中插入键值对，否则转向下面； 遍历链表，p.next是否为null，是则new一个新结点，p.next指向这个新结点，否则判断是否是要找的结点，是则跳出循环，否则继续遍历。</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> V <span class="hljs-title">put</span><span class="hljs-params">(K key, V value)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> putVal(hash(key), key, value, <span class="hljs-keyword">false</span>, <span class="hljs-keyword">true</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">final</span> V <span class="hljs-title">putVal</span><span class="hljs-params">(<span class="hljs-keyword">int</span> hash, K key, V value, <span class="hljs-keyword">boolean</span> onlyIfAbsent,</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-params">                   <span class="hljs-keyword">boolean</span> evict)</span> </span>&#123;</span><br><span class="line">        Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; <span class="hljs-keyword">int</span> n, i;</span><br><span class="line">        <span class="hljs-keyword">if</span> ((tab = table) == <span class="hljs-keyword">null</span> || (n = tab.length) == <span class="hljs-number">0</span>)</span><br><span class="line">            n = (tab = resize()).length;</span><br><span class="line">        <span class="hljs-keyword">if</span> ((p = tab[i = (n - <span class="hljs-number">1</span>) &amp; hash]) == <span class="hljs-keyword">null</span>)</span><br><span class="line">            tab[i] = newNode(hash, key, value, <span class="hljs-keyword">null</span>);</span><br><span class="line">        <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">            Node&lt;K,V&gt; e; K k;</span><br><span class="line">            <span class="hljs-keyword">if</span> (p.hash == hash &amp;&amp;</span><br><span class="line">                ((k = p.key) == key || (key != <span class="hljs-keyword">null</span> &amp;&amp; key.equals(k))))</span><br><span class="line">                e = p;</span><br><span class="line">            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (p <span class="hljs-keyword">instanceof</span> TreeNode)</span><br><span class="line">                e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(<span class="hljs-keyword">this</span>, tab, hash, key, value);</span><br><span class="line">            <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> binCount = <span class="hljs-number">0</span>; ; ++binCount) &#123;</span><br><span class="line">                    <span class="hljs-keyword">if</span> ((e = p.next) == <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">                        p.next = newNode(hash, key, value, <span class="hljs-keyword">null</span>);</span><br><span class="line">                        <span class="hljs-keyword">if</span> (binCount &gt;= TREEIFY_THRESHOLD - <span class="hljs-number">1</span>) <span class="hljs-comment">// -1 for 1st</span></span><br><span class="line">                            treeifyBin(tab, hash);</span><br><span class="line">                        <span class="hljs-keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="hljs-keyword">if</span> (e.hash == hash &amp;&amp;</span><br><span class="line">                        ((k = e.key) == key || (key != <span class="hljs-keyword">null</span> &amp;&amp; key.equals(k))))</span><br><span class="line">                        <span class="hljs-keyword">break</span>;</span><br><span class="line">                    p = e;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">if</span> (e != <span class="hljs-keyword">null</span>) &#123; <span class="hljs-comment">// existing mapping for key</span></span><br><span class="line">                V oldValue = e.value;</span><br><span class="line">                <span class="hljs-keyword">if</span> (!onlyIfAbsent || oldValue == <span class="hljs-keyword">null</span>)</span><br><span class="line">                    e.value = value;</span><br><span class="line">                afterNodeAccess(e);</span><br><span class="line">                <span class="hljs-keyword">return</span> oldValue;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ++modCount;</span><br><span class="line">        <span class="hljs-keyword">if</span> (++size &gt; threshold)</span><br><span class="line">            resize();</span><br><span class="line">        afterNodeInsertion(evict);</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <h2 id="Java8的性能改善"><a href="#Java8的性能改善" class="headerlink" title="Java8的性能改善"></a>Java8的性能改善</h2><p>这里存在一个问题，即使<strong>负载因子</strong>和Hash算法设计的再合理，也免不了会出现拉链过长的情况，一旦出现拉链过长，则会严重影响HashMap的性能。于是，在<strong>JDK1.8</strong>版本中，对数据结构做了进一步的优化，引入了<strong>红黑树</strong>。而当链表长度太长（默认超过8）时，链表就转换为红黑树，利用红黑树快速增删改查的特点提高HashMap的性能，其中会用到红黑树的插入、删除、查找等算法。</p>
 <p>当插入新元素时，对于红黑树的判断如下：</p>
@@ -447,14 +444,14 @@ ew一个新结点，p.next指向这个新结点，否则判断是否是要找的
             
             <a href="/2019/10/22/HashMap%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%8F%8A%E5%85%B6%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="HashMap工作原理和扩容机制">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="HashMap工作原理及其扩容机制">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-21T19:04:33.267Z">2019-10-22</time></div>
-                    <a href="/2019/10/22/HashMap%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%8F%8A%E5%85%B6%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6/" class="title has-link-black-ter is-size-6 has-text-weight-normal">HashMap工作原理和扩容机制</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-21T19:47:56.924Z">2019-10-22</time></div>
+                    <a href="/2019/10/22/HashMap%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%8F%8A%E5%85%B6%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6/" class="title has-link-black-ter is-size-6 has-text-weight-normal">HashMap工作原理及其扩容机制</a>
                     <p class="is-size-7 is-uppercase">
                         
                     </p>
@@ -542,14 +539,14 @@ ew一个新结点，p.next指向这个新结点，否则判断是否是要找的
             
             <a href="/2019/10/22/HashMap%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%8F%8A%E5%85%B6%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="HashMap工作原理和扩容机制">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="HashMap工作原理及其扩容机制">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-21T19:04:33.267Z">2019-10-22</time></div>
-                    <a href="/2019/10/22/HashMap%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%8F%8A%E5%85%B6%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6/" class="title has-link-black-ter is-size-6 has-text-weight-normal">HashMap工作原理和扩容机制</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-10-21T19:47:56.924Z">2019-10-22</time></div>
+                    <a href="/2019/10/22/HashMap%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%8F%8A%E5%85%B6%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6/" class="title has-link-black-ter is-size-6 has-text-weight-normal">HashMap工作原理及其扩容机制</a>
                     <p class="is-size-7 is-uppercase">
                         
                     </p>
@@ -628,7 +625,7 @@ ew一个新结点，p.next指向这个新结点，否则判断是否是要找的
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="HashMap工作原理和扩容机制" height="28">
+                    <img src="/images/logo.svg" alt="HashMap工作原理及其扩容机制" height="28">
                 
                 </a>
                 <p class="is-size-7">
