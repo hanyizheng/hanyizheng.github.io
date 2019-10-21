@@ -183,6 +183,90 @@
             
 
   
+    <article id="post-HashMap工作原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2019/10/22/HashMap%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" target="_blank">HashMap工作原理</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2019/10/22/HashMap%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" class="archive-article-date">
+        <time datetime="2019-10-21T17:00:20.069Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-22</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>title: HashMap����ԭ��</p>
+<p>Hashmap��java�����о��������������⣬�󲿷ֶ�������ײ�ԭ����ʵ�֣�����Ҳ�Ǳ�������ʲ��ˣ�Ϊ���ܹ��¹ʶ�֪�£��ص�д��������ͣ��Ա�ʱʱѧϰ��</p>
+<p>Hash�ṹ<br>HashMap�������ƿ�֪����ʵ�ַ�����Hash�������й�ϵ�������۹�ϣ��֮ǰ�������ȴ���˽����������ݽṹ�����������ҵȻ�������ִ�����ܡ�</p>
+<p>���飺����һ�������Ĵ洢��Ԫ���洢���ݡ�����ָ���±�Ĳ��ң�ʱ�临�Ӷ�ΪO(1)��ͨ������ֵ���в��ң���Ҫ�������飬��һ�ȶԸ����ؼ��ֺ�����Ԫ�أ�ʱ�临�Ӷ�ΪO(n)����Ȼ�������������飬��ɲ��ö��ֲ��ң���ֵ���ң�쳲��������ҵȷ�ʽ���ɽ����Ҹ��Ӷ����ΪO(logn)������һ��Ĳ���ɾ���������漰������Ԫ�ص��ƶ�����ƽ�����Ӷ�ҲΪO(n)</p>
+<p>��������������������������ɾ���Ȳ��������ҵ�ָ������λ�ú󣩣����账����������ü��ɣ�ʱ�临�Ӷ�ΪO(1)�������Ҳ�����Ҫ����������һ���бȶԣ����Ӷ�ΪO(n)</p>
+<p>����������һ�����ƽ��������������������в��룬���ң�ɾ���Ȳ�����ƽ�����ӶȾ�ΪO(logn)��</p>
+<p>��ϣ������������������ݽṹ���ڹ�ϣ���н������ӣ�ɾ�������ҵȲ���������ʮ��֮�ߣ������ǹ�ϣ��ͻ������£�����һ�ζ�λ������ɣ�ʱ�临�Ӷ�ΪO(1)�����������Ǿ���������ϣ�������ʵ�ִﵽ���޵ĳ�����O(1)�ġ�</p>
+<p>����֪�������ݽṹ�������洢�ṹֻ�����֣�˳��洢�ṹ����ʽ�洢�ṹ����ջ�����У�����ͼ���Ǵ��߼��ṹȥ����ģ�ӳ�䵽�ڴ��У�Ҳ������������֯��ʽ�����������������ᵽ�����������и����±����ĳ��Ԫ�أ�һ�ζ�λ�Ϳ��Դﵽ����ϣ���������������ԣ���ϣ�������ɾ������顣<br>������������Ҫ���������ĳ��Ԫ�أ�����ͨ���ѵ�ǰԪ�صĹؼ��� ͨ��ĳ������ӳ�䵽�����е�ĳ��λ�ã�ͨ�������±�һ�ζ�λ�Ϳ���ɲ�����<br>����    location = hash(�ؼ���)<br>���У�hash������Ƶ�����ֱ��Ӱ����������ܡ�<br>��<br>��ϣ��ͻ<br>��ϣ�㷨����һ��ȱ����ǹ�ϣ��ͻ�����磬���ǽ������ݴ洢ʱ������ͨ���Թؼ��ֽ���hashʱ�õ��ĵ�ַ�Ѿ��洢�������ˣ���ʱ�ͻ���ֹ�ϣ��ͻ����ˣ���ϣ���������������Ҫ���õĹ�ϣ�����ᾡ���ܵر�֤ ����򵥺�ɢ�е�ַ�ֲ����ȡ����ǣ�������Ҫ������ǣ�������һ�������Ĺ̶����ȵ��ڴ�ռ䣬�ٺõĹ�ϣ����Ҳ���ܱ�֤�õ��Ĵ洢��ַ���Բ�������ͻ����ô��ϣ��ͻ��ν���أ���ϣ��ͻ�Ľ�������ж���:���Ŷ�ַ����������ͻ������Ѱ����һ��δ��ռ�õĴ洢��ַ������ɢ�к�����������ַ������HashMap���ǲ���������ַ����Ҳ��������+�����ķ�ʽ</p>
+<p>HashMapʵ��ԭ��</p>
+<p>HashMap��������һ��Entry���顣Entry��HashMap�Ļ�����ɵ�Ԫ��ÿһ��Entry����һ��key-value��ֵ�ԡ�<br>����˵��HashMap������+������ɵģ�������HashMap�����壬����������ҪΪ�˽����ϣ��ͻ�����ڵģ������λ��������λ�ò�����������ǰentry��nextָ��null��,��ô���ڲ��ң����ӵȲ����ܿ죬����һ��Ѱַ���ɣ������λ������������������������Ӳ�������ʱ�临�Ӷ�ΪO(n)�����ȱ������������ڼ����ǣ��������������ڲ��Ҳ����������������������Ȼ��ͨ��key�����equals������һ�ȶԲ��ҡ����ԣ����ܿ��ǣ�HashMap�е���������Խ�٣����ܲŻ�Խ�á�</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2019/10/22/HashMap%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
