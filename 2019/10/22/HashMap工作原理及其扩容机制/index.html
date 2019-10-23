@@ -34,7 +34,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/railscasts.css">
 
 
     
@@ -113,6 +113,10 @@
                     </a>
                     
                 
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
                 
                 
                 <a class="navbar-item search" title="Search" href="javascript:;">
@@ -198,15 +202,23 @@
         <div class="buttons is-centered">
             
                 
-<div class="notification is-danger">
-    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
-</div>
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>Alipay</span>
+    <div class="qrcode"><img src="/images/zhifubao.jpg" alt="Alipay"></div>
+</a>
 
                 
                 
-<div class="notification is-danger">
-    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
-</div>
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>Wechat</span>
+    <div class="qrcode"><img src="/images/weixin.png" alt="Wechat"></div>
+</a>
 
                 
                 <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
@@ -321,7 +333,7 @@
         </nav>
         
         <div class="level">
-            <a class="level-item button is-link is-rounded" href="https://github.com/ppoffice" target="_blank">
+            <a class="level-item button is-link is-rounded" href="https://github.com/hanyizheng" target="_blank">
                 Follow</a>
         </div>
         
@@ -330,7 +342,7 @@
         <div class="level is-mobile">
             
             <a class="level-item button is-white is-marginless" target="_blank"
-                title="Github" href="https://github.com/ppoffice">
+                title="Github" href="https://github.com/hanyizheng">
                 
                 <i class="fab fa-github"></i>
                 
@@ -369,8 +381,6 @@
     </div>
 </div>
     
-        
-    
         <div class="card widget">
     <div class="card-content">
         <div class="menu">
@@ -382,7 +392,7 @@
             <li>
                 <a class="level is-mobile" href="https://hexo.io" target="_blank">
                     <span class="level-left">
-                        <span class="level-item">Hexo</span>
+                        <span class="level-item">主题分享</span>
                     </span>
                     <span class="level-right">
                         <span class="level-item tag">hexo.io</span>
@@ -391,12 +401,23 @@
             </li>
         
             <li>
-                <a class="level is-mobile" href="https://github.com/ppoffice" target="_blank">
+                <a class="level is-mobile" href="https://github.com/hanyizheng" target="_blank">
                     <span class="level-left">
-                        <span class="level-item">PPOffice</span>
+                        <span class="level-item">我的的github</span>
                     </span>
                     <span class="level-right">
                         <span class="level-item tag">github.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://cxy1102.com" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">MyFriends</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">cxy1102.com</span>
                     </span>
                 </a>
             </li>
@@ -425,6 +446,48 @@
     
     
         <div class="column-right-shadow is-hidden-widescreen ">
+        
+            
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#什么是哈希表">
+        <span class="has-mr-6">1</span>
+        <span>什么是哈希表</span>
+        </a></li><li>
+        <a class="is-flex" href="#hashmap-工作原理">
+        <span class="has-mr-6">2</span>
+        <span>hashmap**工作原理**</span>
+        </a></li><li>
+        <a class="is-flex" href="#HashMap是如何通过key来计算索引的呢">
+        <span class="has-mr-6">3</span>
+        <span>HashMap是如何通过key来计算索引的呢</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#get-K">
+        <span class="has-mr-6">3.1</span>
+        <span>get(K)</span>
+        </a></li><li>
+        <a class="is-flex" href="#put-K-V">
+        <span class="has-mr-6">3.2</span>
+        <span>put(K, V)</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#Java8的性能改善">
+        <span class="has-mr-6">4</span>
+        <span>Java8的性能改善</span>
+        </a></li><li>
+        <a class="is-flex" href="#HashMap扩容机制">
+        <span class="has-mr-6">5</span>
+        <span>HashMap扩容机制</span>
+        </a></li></ul>
+            </div>
+        </div>
+    </div>
+
         
             <div class="card widget">
     <div class="card-content">
@@ -501,6 +564,48 @@
 
 
 <div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#什么是哈希表">
+        <span class="has-mr-6">1</span>
+        <span>什么是哈希表</span>
+        </a></li><li>
+        <a class="is-flex" href="#hashmap-工作原理">
+        <span class="has-mr-6">2</span>
+        <span>hashmap**工作原理**</span>
+        </a></li><li>
+        <a class="is-flex" href="#HashMap是如何通过key来计算索引的呢">
+        <span class="has-mr-6">3</span>
+        <span>HashMap是如何通过key来计算索引的呢</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#get-K">
+        <span class="has-mr-6">3.1</span>
+        <span>get(K)</span>
+        </a></li><li>
+        <a class="is-flex" href="#put-K-V">
+        <span class="has-mr-6">3.2</span>
+        <span>put(K, V)</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#Java8的性能改善">
+        <span class="has-mr-6">4</span>
+        <span>Java8的性能改善</span>
+        </a></li><li>
+        <a class="is-flex" href="#HashMap扩容机制">
+        <span class="has-mr-6">5</span>
+        <span>HashMap扩容机制</span>
+        </a></li></ul>
+            </div>
+        </div>
+    </div>
+
     
         <div class="card widget">
     <div class="card-content">
